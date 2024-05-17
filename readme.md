@@ -1,7 +1,8 @@
 A fish catching game I developed using Jquery.
 
-https://yemrekayaa.github.io/FishGame-JS/
+
 
 <p align="center">
+  https://yemrekayaa.github.io/FishGame-JS/
   <img  width="400px"src="/fishgame.gif">
 </p>
