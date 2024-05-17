@@ -5,6 +5,8 @@ $(document).ready(() => {
     const catchDiv = $('#catch');
     const catchTimeBar = $('#insideCatchTimeBar');
     const scoreDiv = $('#score');
+    const fishDiv = $('#fish');
+    const fishImg = $('#fishImg');
     
     let gameObject = {
         time: 100,
@@ -27,7 +29,9 @@ $(document).ready(() => {
     let fish = {
         height: 4,
         top:50,
-        catch: null
+        catch: null,
+        move: null,
+        timeOut: null
     }
 
     function mainMenu(){
@@ -44,11 +48,12 @@ $(document).ready(() => {
             mainMenuDiv.css("display", "none");
             gameObject.time -= 0.03;
             insideTimeBar.css("height", gameObject.time + "%");
-            if(gameObject.time == 0){
-               clearInterval(gameObject.gameTime);
+            if(gameObject.time <= 0){
+               endGame();
             }
         },3);
 
+        fishAi();
         fish.catch = setInterval(catchControl,1)
 
         document.addEventListener("mousedown",upCatchBar)
@@ -63,11 +68,14 @@ $(document).ready(() => {
                 catchTime.height = 0;
                 catchTimeBar.css("height", catchTime.height + "%");
                 gameObject.time = 100;
+                fish.top = 50;
+                fishDiv.css("top", fish.top + "%");
+
                 scoreDiv.text(gameObject.score);
 
             }
             if(catchTime.height <= 100){
-                catchTime.height += 0.075;
+                catchTime.height += 0.08;
                 catchTimeBar.css("height", catchTime.height + "%");
             }
         }
@@ -77,31 +85,68 @@ $(document).ready(() => {
         clearInterval(catchBar.upTime);
         catchBar.downtTime = setInterval(() => {
             if(catchBar.top < 100 - catchBar.height - 0.5){
-                catchBar.top += 0.1;
-                catchDiv.css("top", catchBar.top + "%");  
+                catchBar.top += 0.2;
+
             }else{
                 catchBar.top = 100 - catchBar.height - 0.5;
-                catchDiv.css("top", catchBar.top + "%");  
             }
+            catchDiv.css("top", catchBar.top + "%");  
         },0.01);
         
     }
 
     function upCatchBar(){
         clearInterval(catchBar.downtTime);
-        
         catchBar.upTime = setInterval(() => {
             if(catchBar.top > 0) {
-                catchBar.top -= 0.1;
-                catchDiv.css("top", catchBar.top + "%");  
+                catchBar.top -= 0.2;  
             }else{
                 catchBar.top = 0;
-                catchDiv.css("top", catchBar.top + "%");  
             }
-
+            catchDiv.css("top", catchBar.top + "%");
         },0.01);
     }
 
+    function moveFish() {
+        let sign = Math.random() < 0.5 ? -1 : 1;
+        fishImg.css("transform", `scaleY(${-sign})`)
+        let interval = setInterval(() => {
+            if (fish.top > 90 || fish.top < 10) {
+                sign *= -1;
+                fishImg.css("transform", `scaleY(${-sign})`)
+            }
+            fish.top += 0.15 * sign;
+            fishDiv.css("top", fish.top + "%");
+        }, 1);
+    
+        return interval;
+    }
+    
+    function fishAi() {
+        let second = Math.floor(Math.random() * 1500) + 200;
+        clearInterval(fish.move);
+        fish.move = moveFish();
+        fish.timeOut = setTimeout(fishAi, second);
+    }
+ 
+
+    function endGame() {
+        
+        clearInterval(gameObject.gameTime);
+        clearInterval(fish.catch);
+        document.removeEventListener("mousedown", upCatchBar);
+        document.removeEventListener("mouseup", downCatchBar);
+        mainMenuDiv.css("display", "block");
+        clearInterval(fish.move)
+        clearTimeout(fish.timeOut);
+
+        startGameButton.text("Restart Game");
+        
+        startGameButton.on("click",() => {
+            location.reload();
+        });
+
+    }
 
     mainMenu();
 });
