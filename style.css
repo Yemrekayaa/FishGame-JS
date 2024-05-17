@@ -16,3 +16,70 @@ body{
     right: 0;
     overflow: hidden;
 }
+
+#mainMenu{
+    background-color: rgba(19, 10, 7, 0.8);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top:0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#startGame{
+    position: absolute;
+    opacity: 100%;
+    border: 3px solid white;
+    background-color: #343434;
+    width: 200px;
+    height: 50px;
+    top: calc(50% - 25px);
+    left: calc(50% - 100px);
+    color: white;
+    font-size: 22px;
+}
+
+#timeBar{
+    position: absolute;
+    border: 3px solid white;
+    border-right: 0;
+    height: 80vh;
+    width: 15px;
+    left: calc(50% - 37px);
+    top: calc(50% - 40vh);
+}
+#insideTimeBar{
+    position: absolute;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+}
+
+#catchBar{
+    position: absolute;
+    border: 3px solid white;
+    height: 80vh;
+    width: 40px;
+    left: calc(50% - 20px);
+    top: calc(50% - 40vh);
+} 
+
+#catchTimeBar{
+    position: absolute;
+    border: 3px solid white;
+    border-left: 0;
+    height: 80vh;
+    width: 15px;
+    left: calc(50% + 25px);
+    top: calc(50% - 40vh);
+}
+#insideCatchTimeBar{
+    position: absolute;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+}
