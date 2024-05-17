@@ -1,3 +1,3 @@
 <p align="center">
-  <img src="/fishgame.gif">
+  <img  width="400px"src="/fishgame.gif">
 </p>
