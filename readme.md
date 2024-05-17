@@ -3,6 +3,5 @@
 <p align="center">https://yemrekayaa.github.io/FishGame-JS/</p>
 
 <p align="center">
-  
   <img  width="400px"src="/fishgame.gif">
 </p>
